@@ -2652,7 +2652,9 @@ static const struct net_device_ops igb_netdev_ops = {
 	.ndo_vlan_rx_kill_vid	= igb_vlan_rx_kill_vid,
 #ifdef IFLA_VF_MAX
 	.ndo_set_vf_mac		= igb_ndo_set_vf_mac,
+#if !(RHEL_RELEASE_CODE && (RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,3)))
 	.ndo_set_vf_vlan	= igb_ndo_set_vf_vlan,
+#endif
 #ifdef HAVE_NDO_SET_VF_MIN_MAX_TX_RATE
 	.ndo_set_vf_rate	= igb_ndo_set_vf_bw,
 #else

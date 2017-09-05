@@ -4963,7 +4963,7 @@ static inline bool page_is_pfmemalloc(struct page __maybe_unused *page)
 #undef HAVE_STRUCT_PAGE_PFMEMALLOC
 #endif /* 4.1.9 */
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,2,0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,2,0)) && !(RHEL_RELEASE_CODE && (RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,3)))
 #else
 #define HAVE_NDO_DFLT_BRIDGE_GETLINK_VLAN_SUPPORT
 #endif /* 4.2.0 */
@@ -5034,10 +5034,12 @@ static inline void napi_consume_skb(struct sk_buff *skb,
 }
 
 #endif /* UBUNTU_VERSION(4,4,0,21) */
+#if !(RHEL_RELEASE_CODE && (RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,3)))
 static inline void csum_replace_by_diff(__sum16 *sum, __wsum diff)
 {
 	* sum = csum_fold(csum_add(diff, ~csum_unfold(*sum)));
 }
+#endif
 
 #if !(RHEL_RELEASE_CODE && (RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2)))
 static inline void page_ref_inc(struct page *page)
